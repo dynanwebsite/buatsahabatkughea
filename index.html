@@ -31,6 +31,42 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Tombol Musik */
+        .music-btn {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.75);
+            border: 2px solid rgba(255, 182, 193, 0.8);
+            color: #e75480;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
+        }
+
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.08);
+        }
+
+        .music-btn.playing {
+            animation: musicPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(231, 84, 128, 0.5); }
+            50% { box-shadow: 0 0 0 12px rgba(231, 84, 128, 0); }
+        }
+
         .corner-decoration {
             position: fixed;
             font-size: 2.5rem;
@@ -41,7 +77,7 @@
         }
 
         .corner-decoration.top-left { top: 15px; left: 15px; animation-delay: 0s; }
-        .corner-decoration.top-right { top: 15px; right: 15px; animation-delay: 1.75s; }
+        .corner-decoration.top-right { top: 15px; right: 75px; animation-delay: 1.75s; }
         .corner-decoration.bottom-left { bottom: 15px; left: 15px; animation-delay: 3.5s; }
         .corner-decoration.bottom-right { bottom: 15px; right: 15px; animation-delay: 5.25s; }
 
@@ -360,6 +396,8 @@
             .ttd { font-size: 1.3rem; }
             .corner-decoration { font-size: 1.8rem; }
             .sparkle { font-size: 1rem; }
+            .music-btn { width: 40px; height: 40px; font-size: 1rem; top: 15px; right: 15px; }
+            .corner-decoration.top-right { right: 65px; }
         }
 
         @media (max-width: 400px) {
@@ -372,17 +410,22 @@
 </head>
 <body>
 
-    <!-- Lagu: pakai link raw dari GitHub biar pasti bisa diakses -->
+    <!-- Lagu -->
     <audio id="lagu" loop preload="auto">
         <source src="tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
         <source src="https://raw.githubusercontent.com/dyanwebsite/buatsahabatkughea/main/tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Tombol Musik -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+
+    <!-- Hiasan Sudut -->
     <div class="corner-decoration top-left">🌸</div>
     <div class="corner-decoration top-right">🩷</div>
     <div class="corner-decoration bottom-left">🌷</div>
     <div class="corner-decoration bottom-right">💝</div>
 
+    <!-- Sparkle -->
     <div class="sparkle">✨</div>
     <div class="sparkle">⭐</div>
     <div class="sparkle">💫</div>
@@ -390,6 +433,7 @@
     <div class="sparkle">✨</div>
     <div class="sparkle">💖</div>
 
+    <!-- Animasi Jatuh -->
     <div class="falling-container" id="fallingContainer"></div>
 
     <!-- ==================== SLIDE 1 ==================== -->
@@ -532,35 +576,39 @@
 
         // ===== LAGU =====
         const lagu = document.getElementById('lagu');
+        const musicBtn = document.getElementById('musicBtn');
 
-        function cobaPutar() {
-            lagu.volume = 1;
-            const p = lagu.play();
-            if (p !== undefined) {
-                p.then(() => {
-                    console.log('✅ Lagu mutar');
-                }).catch(err => {
-                    console.log('⚠️ Autoplay diblokir:', err);
-                    const mulai = () => {
-                        lagu.play().catch(e => {});
-                        document.removeEventListener('click', mulai);
-                        document.removeEventListener('touchstart', mulai);
-                        document.removeEventListener('scroll', mulai);
-                    };
-                    document.addEventListener('click', mulai);
-                    document.addEventListener('touchstart', mulai);
-                    document.addEventListener('scroll', mulai);
-                });
+        // Coba autoplay
+        function cobaAutoplay() {
+            lagu.play().then(() => {
+                musicBtn.classList.add('playing');
+                musicBtn.textContent = '🎵';
+            }).catch(err => {
+                console.log('⚠️ Autoplay diblokir, tap tombol musik');
+                musicBtn.textContent = '🔇';
+            });
+        }
+
+        function toggleMusic() {
+            if (lagu.paused) {
+                lagu.play().then(() => {
+                    musicBtn.classList.add('playing');
+                    musicBtn.textContent = '🎵';
+                }).catch(e => console.log(e));
+            } else {
+                lagu.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.textContent = '🔇';
             }
         }
 
+        // Loop otomatis
         lagu.addEventListener('ended', () => {
             lagu.currentTime = 0;
             lagu.play();
         });
 
-        cobaPutar();
-        setTimeout(cobaPutar, 1000);
+        cobaAutoplay();
 
         // ===== NAVIGASI =====
         const slides = ['slide1', 'slide2', 'slide3', 'slide4'];
