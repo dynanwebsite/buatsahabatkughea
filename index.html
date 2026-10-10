@@ -31,7 +31,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== HIASAN SUDUT ===== */
         .corner-decoration {
             position: fixed;
             font-size: 2.5rem;
@@ -51,7 +50,6 @@
             50% { transform: translateY(-12px) rotate(15deg); }
         }
 
-        /* ===== ANIMASI JATUH ===== */
         .falling-container {
             position: fixed;
             top: 0; left: 0;
@@ -75,7 +73,6 @@
             100% { transform: translateY(110vh) rotate(360deg) scale(0.4); opacity: 0; }
         }
 
-        /* ===== SPARKLE ===== */
         .sparkle {
             position: fixed;
             color: #ffb6c1;
@@ -97,7 +94,6 @@
             50% { opacity: 0.9; transform: scale(1.3) rotate(180deg); }
         }
 
-        /* ===== SLIDE ===== */
         .slide {
             position: absolute;
             top: 50%; left: 50%;
@@ -123,7 +119,6 @@
             pointer-events: all;
         }
 
-        /* ===== KARTU ===== */
         .card {
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
@@ -153,7 +148,6 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Badge atas — sekarang di DALAM kartu */
         .card-decoration-top {
             display: inline-block;
             margin: 0 auto 18px auto;
@@ -403,18 +397,15 @@
 </head>
 <body>
 
-    <!-- Lagu Autoplay + Loop -->
-    <audio id="lagu" loop preload="auto" muted>
+    <audio id="lagu" loop preload="auto">
         <source src="tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Hiasan Sudut -->
     <div class="corner-decoration top-left">🌸</div>
     <div class="corner-decoration top-right">🩷</div>
     <div class="corner-decoration bottom-left">🌷</div>
     <div class="corner-decoration bottom-right">💝</div>
 
-    <!-- Sparkle -->
     <div class="sparkle">✨</div>
     <div class="sparkle">⭐</div>
     <div class="sparkle">💫</div>
@@ -422,10 +413,8 @@
     <div class="sparkle">✨</div>
     <div class="sparkle">💖</div>
 
-    <!-- Animasi Jatuh -->
     <div class="falling-container" id="fallingContainer"></div>
 
-    <!-- ==================== SLIDE 1 ==================== -->
     <div class="slide active" id="slide1">
         <div class="card">
             <div class="card-decoration-top">🎂 SPECIAL DAY 🎂</div>
@@ -448,7 +437,6 @@
         </div>
     </div>
 
-    <!-- ==================== SLIDE 2 ==================== -->
     <div class="slide" id="slide2">
         <div class="card">
             <div class="card-decoration-top">📸 MEMORIES 📸</div>
@@ -487,7 +475,6 @@
         </div>
     </div>
 
-    <!-- ==================== SLIDE 3 ==================== -->
     <div class="slide" id="slide3">
         <div class="card">
             <div class="card-decoration-top">✨ HARAPAN ✨</div>
@@ -516,7 +503,6 @@
         </div>
     </div>
 
-    <!-- ==================== SLIDE 4 ==================== -->
     <div class="slide" id="slide4">
         <div class="card">
             <div class="card-decoration-top">💖 UNTUKMU 💖</div>
@@ -554,7 +540,6 @@
     </div>
 
     <script>
-        // ===== ANIMASI JATUH =====
         const container = document.getElementById('fallingContainer');
         const items = ['🌸', '⭐', '🩷', '🌷', '✨', '🤍', '💮', '🌺', '💫', '🌟', '💖', '💝', '🎀', '💐'];
 
@@ -570,44 +555,27 @@
             container.appendChild(el);
         }
 
-        // ===== LAGU AUTOPLAY PAKSA =====
+        // ===== LAGU =====
         const lagu = document.getElementById('lagu');
-        lagu.muted = true;
-        lagu.volume = 1;
 
-        function paksaAutoplay() {
-            const playPromise = lagu.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log('✅ Lagu mutar (muted)');
-                    lagu.muted = false;
-                    setTimeout(() => {
-                        if (lagu.muted) {
-                            const unmute = () => {
-                                lagu.muted = false;
-                                lagu.play();
-                                document.removeEventListener('click', unmute);
-                                document.removeEventListener('touchstart', unmute);
-                                document.removeEventListener('scroll', unmute);
-                            };
-                            document.addEventListener('click', unmute);
-                            document.addEventListener('touchstart', unmute);
-                            document.addEventListener('scroll', unmute);
-                        }
-                    }, 100);
-                }).catch(err => {
-                    console.log('❌ Autoplay gagal:', err);
-                    const mulaiLagu = () => {
-                        lagu.muted = false;
-                        lagu.play().catch(e => {});
-                        document.removeEventListener('click', mulaiLagu);
-                        document.removeEventListener('touchstart', mulaiLagu);
-                        document.removeEventListener('scroll', mulaiLagu);
-                    };
-                    document.addEventListener('click', mulaiLagu);
-                    document.addEventListener('touchstart', mulaiLagu);
-                    document.addEventListener('scroll', mulaiLagu);
-                });
+        function cobaPutar() {
+            lagu.volume = 1;
+            const p = lagu.play();
+            if (p !== undefined) {
+                p.then(() => console.log('✅ Lagu mutar'))
+                 .catch(err => {
+                     console.log('⚠️ Autoplay diblokir:', err);
+                     // Coba lagi saat ada interaksi
+                     const mulai = () => {
+                         lagu.play().catch(e => {});
+                         document.removeEventListener('click', mulai);
+                         document.removeEventListener('touchstart', mulai);
+                         document.removeEventListener('scroll', mulai);
+                     };
+                     document.addEventListener('click', mulai);
+                     document.addEventListener('touchstart', mulai);
+                     document.addEventListener('scroll', mulai);
+                 });
             }
         }
 
@@ -616,11 +584,8 @@
             lagu.play();
         });
 
-        paksaAutoplay();
-
-        setTimeout(() => {
-            if (lagu.paused) paksaAutoplay();
-        }, 1000);
+        cobaPutar();
+        setTimeout(cobaPutar, 1000);
 
         // ===== NAVIGASI =====
         const slides = ['slide1', 'slide2', 'slide3', 'slide4'];
