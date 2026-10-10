@@ -348,31 +348,6 @@
             box-shadow: 0 12px 32px rgba(255, 158, 196, 0.25);
         }
 
-        .indicator {
-            position: fixed;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(255, 158, 196, 0.4);
-            transition: all 0.4s ease;
-        }
-
-        .dot.active {
-            background: #ff9ec4;
-            width: 22px;
-            border-radius: 4px;
-            box-shadow: 0 0 10px rgba(255, 158, 196, 0.5);
-        }
-
         @media (max-width: 550px) {
             .card { padding: 22px 22px 28px; }
             .card h1 { font-size: 2.2rem; }
@@ -397,8 +372,10 @@
 </head>
 <body>
 
+    <!-- Lagu: pakai link raw dari GitHub biar pasti bisa diakses -->
     <audio id="lagu" loop preload="auto">
         <source src="tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
+        <source src="https://raw.githubusercontent.com/dyanwebsite/buatsahabatkughea/main/tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
     </audio>
 
     <div class="corner-decoration top-left">🌸</div>
@@ -415,6 +392,7 @@
 
     <div class="falling-container" id="fallingContainer"></div>
 
+    <!-- ==================== SLIDE 1 ==================== -->
     <div class="slide active" id="slide1">
         <div class="card">
             <div class="card-decoration-top">🎂 SPECIAL DAY 🎂</div>
@@ -437,6 +415,7 @@
         </div>
     </div>
 
+    <!-- ==================== SLIDE 2 ==================== -->
     <div class="slide" id="slide2">
         <div class="card">
             <div class="card-decoration-top">📸 MEMORIES 📸</div>
@@ -475,6 +454,7 @@
         </div>
     </div>
 
+    <!-- ==================== SLIDE 3 ==================== -->
     <div class="slide" id="slide3">
         <div class="card">
             <div class="card-decoration-top">✨ HARAPAN ✨</div>
@@ -503,6 +483,7 @@
         </div>
     </div>
 
+    <!-- ==================== SLIDE 4 ==================== -->
     <div class="slide" id="slide4">
         <div class="card">
             <div class="card-decoration-top">💖 UNTUKMU 💖</div>
@@ -532,14 +513,8 @@
         </div>
     </div>
 
-    <div class="indicator">
-        <div class="dot active" data-slide="slide1"></div>
-        <div class="dot" data-slide="slide2"></div>
-        <div class="dot" data-slide="slide3"></div>
-        <div class="dot" data-slide="slide4"></div>
-    </div>
-
     <script>
+        // ===== ANIMASI JATUH =====
         const container = document.getElementById('fallingContainer');
         const items = ['🌸', '⭐', '🩷', '🌷', '✨', '🤍', '💮', '🌺', '💫', '🌟', '💖', '💝', '🎀', '💐'];
 
@@ -562,20 +537,20 @@
             lagu.volume = 1;
             const p = lagu.play();
             if (p !== undefined) {
-                p.then(() => console.log('✅ Lagu mutar'))
-                 .catch(err => {
-                     console.log('⚠️ Autoplay diblokir:', err);
-                     // Coba lagi saat ada interaksi
-                     const mulai = () => {
-                         lagu.play().catch(e => {});
-                         document.removeEventListener('click', mulai);
-                         document.removeEventListener('touchstart', mulai);
-                         document.removeEventListener('scroll', mulai);
-                     };
-                     document.addEventListener('click', mulai);
-                     document.addEventListener('touchstart', mulai);
-                     document.addEventListener('scroll', mulai);
-                 });
+                p.then(() => {
+                    console.log('✅ Lagu mutar');
+                }).catch(err => {
+                    console.log('⚠️ Autoplay diblokir:', err);
+                    const mulai = () => {
+                        lagu.play().catch(e => {});
+                        document.removeEventListener('click', mulai);
+                        document.removeEventListener('touchstart', mulai);
+                        document.removeEventListener('scroll', mulai);
+                    };
+                    document.addEventListener('click', mulai);
+                    document.addEventListener('touchstart', mulai);
+                    document.addEventListener('scroll', mulai);
+                });
             }
         }
 
@@ -595,13 +570,6 @@
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             document.getElementById(slideId).classList.add('active');
             currentIndex = slides.indexOf(slideId);
-            updateDots();
-        }
-
-        function updateDots() {
-            document.querySelectorAll('.dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentIndex);
-            });
         }
     </script>
 
