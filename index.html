@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Untuk Ghea 🩷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(160deg, #fde8f0, #f8d7e3, #f5c6d8, #fce4ec);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            padding: 15px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Partikel Lembut */
+        .falling-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .falling-item {
+            position: absolute;
+            top: -10%;
+            font-size: 22px;
+            animation: fallDown linear infinite;
+            user-select: none;
+            opacity: 0.5;
+        }
+
+        @keyframes fallDown {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            100% { transform: translateY(110vh) rotate(360deg) scale(0.4); opacity: 0; }
+        }
+
+        /* Slide */
+        .slide {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.85);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 100%;
+            max-width: 580px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            padding: 15px;
+            z-index: 1;
+        }
+
+        .slide.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Kartu */
+        .card {
+            background: linear-gradient(170deg, #ffffff, #fff5f8, #fde8f0);
+            padding: 45px 35px 38px;
+            border-radius: 28px;
+            box-shadow:
+                0 25px 60px rgba(199, 21, 133, 0.15),
+                0 10px 30px rgba(199, 21, 133, 0.08),
+                0 0 0 1px rgba(255, 182, 193, 0.4) inset;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            animation: floatIn 1.3s ease forwards;
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+
+        .card::-webkit-scrollbar { width: 3px; }
+        .card::-webkit-scrollbar-thumb { background: #f5c6d8; border-radius: 10px; }
+
+        @keyframes floatIn {
+            0% { opacity: 0; transform: scale(0.85) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Ornamen garis halus */
+        .ornament {
+            color: #d4a373;
+            letter-spacing: 12px;
+            font-size: 0.75rem;
+            opacity: 0.5;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        /* Judul */
+        .card h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #c71585;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+
+        .card .nama {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #d6336c;
+            font-weight: 700;
+            margin: 8px 0;
+            letter-spacing: 2px;
+        }
+
+        .card .dari {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: #a06b8b;
+            font-style: italic;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        .card .cake {
+            font-size: 3.5rem;
+            display: block;
+            margin: 5px 0;
+            animation: cakeBounce 2.5s ease-in-out infinite;
+        }
+
+        @keyframes cakeBounce {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.08) rotate(-4deg); }
+            75% { transform: scale(1.08) rotate(4deg); }
+        }
+
+        /* Galeri 4 Foto */
+        .galeri {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 18px 0;
+            width: 100%;
+        }
+
+        .foto-box {
+            background: #fff;
+            padding: 5px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(199, 21, 133, 0.12);
+            overflow: hidden;
+            aspect-ratio: 1;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .foto-box::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 182, 193, 0.5);
+            pointer-events: none;
+        }
+
+        .foto-box:hover {
+            transform: scale(1.04) rotate(1deg);
+            box-shadow: 0 12px 32px rgba(199, 21, 133, 0.2);
+        }
+
+        .foto-box img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            display: block;
+        }
+
+        /* Pesan */
+        .pesan {
+            font-family: 'Cormorant Garamond', serif;
+            color: #5a3a4a;
+            font-size: 1.05rem;
+            line-height: 1.9;
+            margin: 12px 0;
+            padding: 0 8px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .pesan strong {
+            color: #c71585;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        /* Doa */
+        .doa {
+            font-family: 'Cormorant Garamond', serif;
+            color: #5a3a4a;
+            font-size: 1.05rem;
+            line-height: 2;
+            margin: 12px 0;
+            padding: 0 8px;
+            font-style: italic;
+        }
+
+        .hati {
+            font-size: 2.5rem;
+            display: block;
+            margin: 12px 0;
+            animation: heartBeat 1.8s ease-in-out infinite;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+            50% { transform: scale(1); }
+            70% { transform: scale(1.1); }
+        }
+
+        .ttd {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: #d6336c;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(214, 51, 108, 0.15);
+            padding-top: 18px;
+        }
+
+        /* Tombol Navigasi */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-nav {
+            padding: 12px 34px;
+            background: linear-gradient(145deg, #ffffff, #fde8f0);
+            color: #c71585;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 6px 20px rgba(199, 21, 133, 0.15);
+            transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(255, 182, 193, 0.6);
+            letter-spacing: 1.5px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #fff, #fce4ec);
+            box-shadow: 0 10px 28px rgba(199, 21, 133, 0.25);
+        }
+
+        .btn-nav:active { transform: scale(0.96); }
+
+        .btn-nav.prev::before { content: '◀ '; font-size: 0.7rem; }
+        .btn-nav.next::after { content: ' ▶'; font-size: 0.7rem; }
+
+        /* Indikator */
+        .indicator {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(199, 21, 133, 0.2);
+            transition: all 0.4s ease;
+        }
+
+        .dot.active {
+            background: #d6336c;
+            width: 22px;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(214, 51, 108, 0.4);
+        }
+
+        /* Hint */
+        .swipe-hint {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(199, 21, 133, 0.5);
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            animation: hintPulse 2.5s ease-in-out infinite;
+            z-index: 10;
+            text-align: center;
+            font-weight: 300;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.9; }
+        }
+
+        /* Tombol Musik */
+        .music-btn {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 182, 193, 0.6);
+            color: #c71585;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(199, 21, 133, 0.1);
+        }
+
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            transform: scale(1.08);
+        }
+
+        .music-btn.playing {
+            animation: musicPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(214, 51, 108, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(214, 51, 108, 0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 550px) {
+            .card { padding: 32px 22px 28px; }
+            .card h1 { font-size: 2.2rem; }
+            .card .nama { font-size: 2.4rem; }
+            .card .cake { font-size: 2.8rem; }
+            .pesan { font-size: 0.95rem; line-height: 1.85; }
+            .doa { font-size: 0.95rem; line-height: 1.9; }
+            .btn-nav { padding: 10px 24px; font-size: 0.78rem; }
+            .galeri { gap: 8px; }
+            .ttd { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 400px) {
+            .card h1 { font-size: 1.8rem; }
+            .card .nama { font-size: 2rem; }
+            .pesan { font-size: 0.88rem; }
+            .doa { font-size: 0.88rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Lagu -->
+    <audio id="lagu" loop preload="auto">
+        <source src="tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Tombol Musik -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+
+    <!-- Partikel -->
+    <div class="falling-container" id="fallingContainer"></div>
+
+    <!-- Hint -->
+    <div class="swipe-hint" id="swipeHint">GESER KE ATAS ✧ BAWAH</div>
+
+    <!-- ==================== SLIDE 1 ==================== -->
+    <div class="slide active" id="slide1">
+        <div class="card">
+            <span class="ornament">✧ ✧ ✧</span>
+            <span class="cake">🎂</span>
+            <h1>Happy Birthday</h1>
+            <div class="nama">Ghea</div>
+            <span class="ornament">✧ ✧ ✧</span>
+            <p class="pesan" style="margin-top: 12px;">
+                "Maaf ya aku gak bisa ucapin<br>
+                kayak waktu itu — selalu yang pertama.<br><br>
+                Tapi walau bukan yang pertama,<br>
+                aku tetap mau ucapin:<br>
+                <strong>selamat ulang tahun, ya.</strong>"
+            </p>
+            <div class="dari">— dari Sasa —</div>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-nav next" onclick="goToSlide('slide2')">Lanjut</button>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 2 ==================== -->
+    <div class="slide" id="slide2">
+        <div class="card">
+            <span class="ornament">✧ ✧ ✧</span>
+            <h1 style="font-size: 2.2rem;">Untuk Kamu</h1>
+            <span class="ornament" style="margin-top: 5px;">✧ ✧ ✧</span>
+
+            <div class="galeri">
+                <div class="foto-box">
+                    <img src="https://i.ibb.co.com/ymnWY0Gh/IMG-20261010-WA0019.jpg" alt="Foto Ghea 1">
+                </div>
+                <div class="foto-box">
+                    <img src="https://i.ibb.co.com/rgP0S9Z/IMG-20261010-WA0018.jpg" alt="Foto Ghea 2">
+                </div>
+                <div class="foto-box">
+                    <img src="https://i.ibb.co.com/MxLvNnKp/IMG-20261010-WA0017.jpg" alt="Foto Ghea 3">
+                </div>
+                <div class="foto-box">
+                    <img src="https://i.ibb.co.com/dwtbT67r/IMG-20261010-WA0020.jpg" alt="Foto Ghea 4">
+                </div>
+            </div>
+
+            <p class="pesan">
+                "Makasih ya,<br>
+                udah mau jadi sahabatku,<br>
+                udah sejauh ini.<br><br>
+                Walau kita udah jarang banget chat,<br>
+                tapi kamu tetap berarti buat aku."
+            </p>
+
+            <span class="ornament">✧ ✧ ✧</span>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-nav prev" onclick="goToSlide('slide1')">Kembali</button>
+            <button class="btn-nav next" onclick="goToSlide('slide3')">Lanjut</button>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 3 ==================== -->
+    <div class="slide" id="slide3">
+        <div class="card">
+            <span class="ornament">✧ ✧ ✧</span>
+            <span class="hati">🤍</span>
+            <h1 style="font-size: 2.2rem;">Harapanku</h1>
+
+            <p class="doa">
+                "Sehat selalu ya,<br>
+                panjang umurnya,<br>
+                makin baik, makin cantik,<br>
+                makin pinter.<br><br>
+                Semoga apa yang kamu mau,<br>
+                semua bakal terkabul.<br><br>
+                Yang aku mau di ulang tahunmu ini<br>
+                dan seterusnya —<br>
+                aku cuma mau lihat kamu<br>
+                senyum terus, ketawa terus."
+            </p>
+
+            <span class="ornament">✧ ✧ ✧</span>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-nav prev" onclick="goToSlide('slide2')">Kembali</button>
+            <button class="btn-nav next" onclick="goToSlide('slide4')">Lanjut</button>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 4 ==================== -->
+    <div class="slide" id="slide4">
+        <div class="card">
+            <span class="ornament">✧ ✧ ✧</span>
+            <span class="hati">🩷</span>
+            <h1 style="font-size: 2.2rem;">Untukmu</h1>
+
+            <p class="doa">
+                "Aku gak mau lihat kamu sedih,<br>
+                bahkan sampai nangis.<br>
+                Rasanya nyesek kalau lihat kamu nangis.<br><br>
+                Jaga diri baik-baik di sana.<br>
+                Kita memang virtual,<br>
+                tapi siapa tau takdir bisa nemuin kita.<br><br>
+                Pokoknya, aku mau kamu senang terus<br>
+                di hari ulang tahunmu, besok, lusa,<br>
+                dan seterusnya.<br><br>
+                <strong>Happy birthday, my bestie.</strong>"
+            </p>
+
+            <span class="ornament">✧ ✧ ✧</span>
+            <div class="ttd">— Sasa —</div>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-nav prev" onclick="goToSlide('slide3')">Kembali</button>
+            <button class="btn-nav" onclick="goToSlide('slide1')">↻ Ulang</button>
+        </div>
+    </div>
+
+    <!-- Indikator -->
+    <div class="indicator">
+        <div class="dot active" data-slide="slide1"></div>
+        <div class="dot" data-slide="slide2"></div>
+        <div class="dot" data-slide="slide3"></div>
+        <div class="dot" data-slide="slide4"></div>
+    </div>
+
+    <script>
+        // ===== PARTIKEL LEMBUT =====
+        const container = document.getElementById('fallingContainer');
+        const items = ['🌸', '✧', '🩷', '🌷', '✨', '🤍', '💮', '🌺'];
+
+        for (let i = 0; i < 35; i++) {
+            const el = document.createElement('div');
+            el.className = 'falling-item';
+            el.textContent = items[Math.floor(Math.random() * items.length)];
+            el.style.left = Math.random() * 100 + '%';
+            el.style.fontSize = (Math.random() * 18 + 12) + 'px';
+            el.style.animationDuration = (Math.random() * 16 + 10) + 's';
+            el.style.animationDelay = (Math.random() * 20) + 's';
+            el.style.opacity = (Math.random() * 0.3 + 0.2);
+            container.appendChild(el);
+        }
+
+        // ===== LAGU =====
+        const lagu = document.getElementById('lagu');
+        const musicBtn = document.getElementById('musicBtn');
+
+        function cobaPutarLagu() {
+            lagu.play().then(() => {
+                musicBtn.classList.add('playing');
+                musicBtn.textContent = '🎵';
+            }).catch(err => {
+                musicBtn.textContent = '🔇';
+                const mulaiLagu = () => {
+                    lagu.play().then(() => {
+                        musicBtn.classList.add('playing');
+                        musicBtn.textContent = '🎵';
+                    }).catch(e => {});
+                    document.removeEventListener('click', mulaiLagu);
+                    document.removeEventListener('touchstart', mulaiLagu);
+                };
+                document.addEventListener('click', mulaiLagu);
+                document.addEventListener('touchstart', mulaiLagu);
+            });
+        }
+
+        function toggleMusic() {
+            if (lagu.paused) {
+                lagu.play();
+                musicBtn.classList.add('playing');
+                musicBtn.textContent = '🎵';
+            } else {
+                lagu.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.textContent = '🔇';
+            }
+        }
+
+        cobaPutarLagu();
+
+        // ===== NAVIGASI =====
+        const slides = ['slide1', 'slide2', 'slide3', 'slide4'];
+        let currentIndex = 0;
+
+        function goToSlide(slideId) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById(slideId).classList.add('active');
+            currentIndex = slides.indexOf(slideId);
+            updateDots();
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function nextSlide() {
+            if (currentIndex < slides.length - 1) goToSlide(slides[currentIndex + 1]);
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) goToSlide(slides[currentIndex - 1]);
+        }
+
+        // ===== SWIPE =====
+        let touchStartY = 0, touchStartX = 0, touchStartTime = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX;
+            touchStartTime = Date.now();
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            const diffY = touchStartY - e.changedTouches[0].clientY;
+            const diffX = touchStartX - e.changedTouches[0].clientX;
+            const duration = Date.now() - touchStartTime;
+            if (duration < 800) {
+                if (diffY > 50 && Math.abs(diffX) < 100) nextSlide();
+                else if (diffY < -50 && Math.abs(diffX) < 100) prevSlide();
+            }
+        }, { passive: true });
+
+        // ===== MOUSE =====
+        let mouseStartY = 0, isMouseDown = false;
+        document.addEventListener('mousedown', (e) => { mouseStartY = e.clientY; isMouseDown = true; });
+        document.addEventListener('mouseup', (e) => {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            const diff = mouseStartY - e.clientY;
+            if (diff > 50) nextSlide();
+            else if (diff < -50) prevSlide();
+        });
+
+        // ===== KEYBOARD =====
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp' || e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // ===== HINT =====
+        setTimeout(() => {
+            const hint = document.getElementById('swipeHint');
+            if (hint) hint.style.display = 'none';
+        }, 5000);
+    </script>
+
+</body>
+</html>
