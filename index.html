@@ -75,7 +75,7 @@
             100% { transform: translateY(110vh) rotate(360deg) scale(0.4); opacity: 0; }
         }
 
-        /* ===== HIASAN TENGAH (BINTANG BERKEDIP) ===== */
+        /* ===== SPARKLE ===== */
         .sparkle {
             position: fixed;
             color: #ffb6c1;
@@ -111,9 +111,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 18px;
+            gap: 15px;
             padding: 15px;
             z-index: 1;
+            max-height: 96vh;
         }
 
         .slide.active {
@@ -126,7 +127,7 @@
         .card {
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
-            padding: 45px 35px 38px;
+            padding: 25px 35px 35px;
             border-radius: 28px;
             box-shadow:
                 0 20px 50px rgba(255, 105, 180, 0.12),
@@ -136,8 +137,12 @@
             position: relative;
             width: 100%;
             animation: floatIn 1.3s ease forwards;
-            max-height: 82vh;
+            max-height: 80vh;
             overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .card::-webkit-scrollbar { width: 3px; }
@@ -148,15 +153,13 @@
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* ===== HIASAN ATAS KARTU ===== */
+        /* Badge atas — sekarang di DALAM kartu */
         .card-decoration-top {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
+            display: inline-block;
+            margin: 0 auto 18px auto;
             background: linear-gradient(135deg, #ffb6c1, #ff9ec4);
             color: white;
-            padding: 5px 22px;
+            padding: 6px 22px;
             border-radius: 20px;
             font-size: 0.68rem;
             letter-spacing: 2px;
@@ -165,7 +168,6 @@
             white-space: nowrap;
         }
 
-        /* Ornamen */
         .ornament {
             color: #ffb6c1;
             letter-spacing: 12px;
@@ -175,7 +177,6 @@
             margin-bottom: 12px;
         }
 
-        /* Judul */
         .card h1 {
             font-family: 'Dancing Script', cursive;
             font-size: 2.8rem;
@@ -217,7 +218,6 @@
             75% { transform: scale(1.08) rotate(4deg); }
         }
 
-        /* Galeri 4 Foto */
         .galeri {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -258,7 +258,6 @@
             display: block;
         }
 
-        /* Pesan */
         .pesan {
             font-family: 'Cormorant Garamond', serif;
             color: #6b3a5a;
@@ -311,7 +310,6 @@
             padding-top: 18px;
         }
 
-        /* Tombol */
         .nav-buttons {
             display: flex;
             gap: 12px;
@@ -356,10 +354,9 @@
             box-shadow: 0 12px 32px rgba(255, 158, 196, 0.25);
         }
 
-        /* Indikator */
         .indicator {
             position: fixed;
-            bottom: 18px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -382,9 +379,8 @@
             box-shadow: 0 0 10px rgba(255, 158, 196, 0.5);
         }
 
-        /* Responsive */
         @media (max-width: 550px) {
-            .card { padding: 32px 22px 28px; }
+            .card { padding: 22px 22px 28px; }
             .card h1 { font-size: 2.2rem; }
             .card .nama { font-size: 2.4rem; }
             .card .cake { font-size: 2.8rem; }
@@ -408,7 +404,7 @@
 <body>
 
     <!-- Lagu Autoplay + Loop -->
-    <audio id="lagu" loop autoplay preload="auto">
+    <audio id="lagu" loop preload="auto" muted>
         <source src="tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
     </audio>
 
@@ -418,7 +414,7 @@
     <div class="corner-decoration bottom-left">🌷</div>
     <div class="corner-decoration bottom-right">💝</div>
 
-    <!-- Sparkle Tengah -->
+    <!-- Sparkle -->
     <div class="sparkle">✨</div>
     <div class="sparkle">⭐</div>
     <div class="sparkle">💫</div>
@@ -574,22 +570,45 @@
             container.appendChild(el);
         }
 
-        // ===== LAGU AUTOPLAY + LOOP =====
+        // ===== LAGU AUTOPLAY PAKSA =====
         const lagu = document.getElementById('lagu');
+        lagu.muted = true;
+        lagu.volume = 1;
 
-        function cobaAutoplay() {
-            lagu.play().catch(err => {
-                console.log('Autoplay diblokir, nunggu interaksi user');
-                const mulaiLagu = () => {
-                    lagu.play().catch(e => {});
-                    document.removeEventListener('click', mulaiLagu);
-                    document.removeEventListener('touchstart', mulaiLagu);
-                    document.removeEventListener('scroll', mulaiLagu);
-                };
-                document.addEventListener('click', mulaiLagu);
-                document.addEventListener('touchstart', mulaiLagu);
-                document.addEventListener('scroll', mulaiLagu);
-            });
+        function paksaAutoplay() {
+            const playPromise = lagu.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('✅ Lagu mutar (muted)');
+                    lagu.muted = false;
+                    setTimeout(() => {
+                        if (lagu.muted) {
+                            const unmute = () => {
+                                lagu.muted = false;
+                                lagu.play();
+                                document.removeEventListener('click', unmute);
+                                document.removeEventListener('touchstart', unmute);
+                                document.removeEventListener('scroll', unmute);
+                            };
+                            document.addEventListener('click', unmute);
+                            document.addEventListener('touchstart', unmute);
+                            document.addEventListener('scroll', unmute);
+                        }
+                    }, 100);
+                }).catch(err => {
+                    console.log('❌ Autoplay gagal:', err);
+                    const mulaiLagu = () => {
+                        lagu.muted = false;
+                        lagu.play().catch(e => {});
+                        document.removeEventListener('click', mulaiLagu);
+                        document.removeEventListener('touchstart', mulaiLagu);
+                        document.removeEventListener('scroll', mulaiLagu);
+                    };
+                    document.addEventListener('click', mulaiLagu);
+                    document.addEventListener('touchstart', mulaiLagu);
+                    document.addEventListener('scroll', mulaiLagu);
+                });
+            }
         }
 
         lagu.addEventListener('ended', () => {
@@ -597,7 +616,11 @@
             lagu.play();
         });
 
-        cobaAutoplay();
+        paksaAutoplay();
+
+        setTimeout(() => {
+            if (lagu.paused) paksaAutoplay();
+        }, 1000);
 
         // ===== NAVIGASI =====
         const slides = ['slide1', 'slide2', 'slide3', 'slide4'];
