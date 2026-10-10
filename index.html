@@ -11,16 +11,15 @@
         html, body {
             height: 100%;
             overflow: hidden;
-            touch-action: none;
         }
 
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(160deg, #fde8f0, #f8d7e3, #f5c6d8, #fce4ec);
+            background: linear-gradient(160deg, #fff0f5, #ffe4ec, #ffd9e8, #fff0f5);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 18s ease infinite;
             font-family: 'Poppins', sans-serif;
             position: relative;
             padding: 15px;
@@ -32,7 +31,27 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Partikel Lembut */
+        /* ===== HIASAN SUDUT ===== */
+        .corner-decoration {
+            position: fixed;
+            font-size: 2.5rem;
+            opacity: 0.35;
+            z-index: 0;
+            pointer-events: none;
+            animation: cornerFloat 7s ease-in-out infinite;
+        }
+
+        .corner-decoration.top-left { top: 15px; left: 15px; animation-delay: 0s; }
+        .corner-decoration.top-right { top: 15px; right: 15px; animation-delay: 1.75s; }
+        .corner-decoration.bottom-left { bottom: 15px; left: 15px; animation-delay: 3.5s; }
+        .corner-decoration.bottom-right { bottom: 15px; right: 15px; animation-delay: 5.25s; }
+
+        @keyframes cornerFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(15deg); }
+        }
+
+        /* ===== ANIMASI JATUH ===== */
         .falling-container {
             position: fixed;
             top: 0; left: 0;
@@ -45,18 +64,18 @@
         .falling-item {
             position: absolute;
             top: -10%;
-            font-size: 22px;
+            font-size: 20px;
             animation: fallDown linear infinite;
             user-select: none;
-            opacity: 0.5;
+            opacity: 0.6;
         }
 
         @keyframes fallDown {
-            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.6; }
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.7; }
             100% { transform: translateY(110vh) rotate(360deg) scale(0.4); opacity: 0; }
         }
 
-        /* Slide */
+        /* ===== SLIDE ===== */
         .slide {
             position: absolute;
             top: 50%; left: 50%;
@@ -65,7 +84,7 @@
             pointer-events: none;
             transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
             width: 100%;
-            max-width: 580px;
+            max-width: 560px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,37 +100,55 @@
             pointer-events: all;
         }
 
-        /* Kartu */
+        /* ===== KARTU ===== */
         .card {
-            background: linear-gradient(170deg, #ffffff, #fff5f8, #fde8f0);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
             padding: 45px 35px 38px;
             border-radius: 28px;
             box-shadow:
-                0 25px 60px rgba(199, 21, 133, 0.15),
-                0 10px 30px rgba(199, 21, 133, 0.08),
-                0 0 0 1px rgba(255, 182, 193, 0.4) inset;
+                0 20px 50px rgba(255, 105, 180, 0.15),
+                0 8px 24px rgba(255, 105, 180, 0.08),
+                0 0 0 1.5px rgba(255, 182, 193, 0.5) inset;
             text-align: center;
             position: relative;
             width: 100%;
             animation: floatIn 1.3s ease forwards;
-            max-height: 88vh;
+            max-height: 82vh;
             overflow-y: auto;
         }
 
         .card::-webkit-scrollbar { width: 3px; }
-        .card::-webkit-scrollbar-thumb { background: #f5c6d8; border-radius: 10px; }
+        .card::-webkit-scrollbar-thumb { background: #ffd1dc; border-radius: 10px; }
 
         @keyframes floatIn {
             0% { opacity: 0; transform: scale(0.85) translateY(30px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        /* Ornamen garis halus */
+        /* Badge atas */
+        .card-decoration-top {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffb6c1, #ff85b3);
+            color: white;
+            padding: 5px 22px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            letter-spacing: 2px;
+            font-weight: 500;
+            box-shadow: 0 6px 16px rgba(255, 105, 180, 0.3);
+            white-space: nowrap;
+        }
+
+        /* Ornamen */
         .ornament {
-            color: #d4a373;
+            color: #ffb6c1;
             letter-spacing: 12px;
-            font-size: 0.75rem;
-            opacity: 0.5;
+            font-size: 0.8rem;
+            opacity: 0.8;
             display: block;
             margin-bottom: 12px;
         }
@@ -120,7 +157,7 @@
         .card h1 {
             font-family: 'Dancing Script', cursive;
             font-size: 2.8rem;
-            color: #c71585;
+            color: #d6336c;
             letter-spacing: 1px;
             margin-bottom: 8px;
             line-height: 1.15;
@@ -130,7 +167,7 @@
         .card .nama {
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
-            color: #d6336c;
+            color: #e75480;
             font-weight: 700;
             margin: 8px 0;
             letter-spacing: 2px;
@@ -139,7 +176,7 @@
         .card .dari {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1rem;
-            color: #a06b8b;
+            color: #b07a9b;
             font-style: italic;
             margin-top: 20px;
             letter-spacing: 1px;
@@ -171,7 +208,7 @@
             background: #fff;
             padding: 5px;
             border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(199, 21, 133, 0.12);
+            box-shadow: 0 8px 24px rgba(255, 105, 180, 0.12);
             overflow: hidden;
             aspect-ratio: 1;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -183,13 +220,13 @@
             position: absolute;
             inset: 5px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 182, 193, 0.5);
+            border: 1px solid rgba(255, 182, 193, 0.6);
             pointer-events: none;
         }
 
         .foto-box:hover {
             transform: scale(1.04) rotate(1deg);
-            box-shadow: 0 12px 32px rgba(199, 21, 133, 0.2);
+            box-shadow: 0 12px 32px rgba(255, 105, 180, 0.25);
         }
 
         .foto-box img {
@@ -202,7 +239,7 @@
         /* Pesan */
         .pesan {
             font-family: 'Cormorant Garamond', serif;
-            color: #5a3a4a;
+            color: #6b3a5a;
             font-size: 1.05rem;
             line-height: 1.9;
             margin: 12px 0;
@@ -212,7 +249,7 @@
         }
 
         .pesan strong {
-            color: #c71585;
+            color: #d6336c;
             font-weight: 600;
             font-style: normal;
         }
@@ -220,7 +257,7 @@
         /* Doa */
         .doa {
             font-family: 'Cormorant Garamond', serif;
-            color: #5a3a4a;
+            color: #6b3a5a;
             font-size: 1.05rem;
             line-height: 2;
             margin: 12px 0;
@@ -253,7 +290,7 @@
             padding-top: 18px;
         }
 
-        /* Tombol Navigasi */
+        /* ===== TOMBOL ===== */
         .nav-buttons {
             display: flex;
             gap: 12px;
@@ -263,33 +300,42 @@
         }
 
         .btn-nav {
-            padding: 12px 34px;
-            background: linear-gradient(145deg, #ffffff, #fde8f0);
-            color: #c71585;
-            font-size: 0.85rem;
+            padding: 13px 40px;
+            background: linear-gradient(145deg, #ff8fab, #ff69b4);
+            color: #fff;
+            font-size: 0.9rem;
             font-weight: 500;
             border: none;
             border-radius: 50px;
-            box-shadow: 0 6px 20px rgba(199, 21, 133, 0.15);
+            box-shadow: 0 8px 24px rgba(255, 105, 180, 0.4);
             transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-            border: 1px solid rgba(255, 182, 193, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.6);
             letter-spacing: 1.5px;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
         }
 
         .btn-nav:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(145deg, #fff, #fce4ec);
-            box-shadow: 0 10px 28px rgba(199, 21, 133, 0.25);
+            transform: translateY(-3px) scale(1.03);
+            background: linear-gradient(145deg, #ff9ec4, #ff85b3);
+            box-shadow: 0 12px 32px rgba(255, 105, 180, 0.55);
         }
 
         .btn-nav:active { transform: scale(0.96); }
 
-        .btn-nav.prev::before { content: '◀ '; font-size: 0.7rem; }
-        .btn-nav.next::after { content: ' ▶'; font-size: 0.7rem; }
+        .btn-nav.prev {
+            background: linear-gradient(145deg, #ffffff, #ffe4ec);
+            color: #d6336c;
+            border: 2px solid rgba(255, 182, 193, 0.7);
+            box-shadow: 0 8px 24px rgba(255, 105, 180, 0.15);
+        }
 
-        /* Indikator */
+        .btn-nav.prev:hover {
+            background: linear-gradient(145deg, #fff, #ffd9e8);
+            box-shadow: 0 12px 32px rgba(255, 105, 180, 0.25);
+        }
+
+        /* ===== INDIKATOR ===== */
         .indicator {
             position: fixed;
             bottom: 18px;
@@ -304,50 +350,29 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: rgba(199, 21, 133, 0.2);
+            background: rgba(255, 105, 180, 0.3);
             transition: all 0.4s ease;
         }
 
         .dot.active {
-            background: #d6336c;
+            background: #ff69b4;
             width: 22px;
             border-radius: 4px;
-            box-shadow: 0 0 8px rgba(214, 51, 108, 0.4);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
-        /* Hint */
-        .swipe-hint {
-            position: fixed;
-            top: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(199, 21, 133, 0.5);
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            animation: hintPulse 2.5s ease-in-out infinite;
-            z-index: 10;
-            text-align: center;
-            font-weight: 300;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        @keyframes hintPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.9; }
-        }
-
-        /* Tombol Musik */
+        /* ===== TOMBOL MUSIK ===== */
         .music-btn {
             position: fixed;
             top: 18px;
             right: 18px;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 182, 193, 0.6);
-            color: #c71585;
-            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 182, 193, 0.7);
+            color: #d6336c;
+            font-size: 1.1rem;
             cursor: pointer;
             z-index: 10;
             display: flex;
@@ -355,11 +380,11 @@
             justify-content: center;
             transition: all 0.3s ease;
             backdrop-filter: blur(8px);
-            box-shadow: 0 4px 12px rgba(199, 21, 133, 0.1);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.15);
         }
 
         .music-btn:hover {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.95);
             transform: scale(1.08);
         }
 
@@ -372,7 +397,7 @@
             50% { box-shadow: 0 0 0 10px rgba(214, 51, 108, 0); }
         }
 
-        /* Responsive */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 550px) {
             .card { padding: 32px 22px 28px; }
             .card h1 { font-size: 2.2rem; }
@@ -380,9 +405,10 @@
             .card .cake { font-size: 2.8rem; }
             .pesan { font-size: 0.95rem; line-height: 1.85; }
             .doa { font-size: 0.95rem; line-height: 1.9; }
-            .btn-nav { padding: 10px 24px; font-size: 0.78rem; }
+            .btn-nav { padding: 12px 30px; font-size: 0.82rem; }
             .galeri { gap: 8px; }
             .ttd { font-size: 1.3rem; }
+            .corner-decoration { font-size: 1.8rem; }
         }
 
         @media (max-width: 400px) {
@@ -395,23 +421,27 @@
 </head>
 <body>
 
-    <!-- Lagu -->
-    <audio id="lagu" loop preload="auto">
+    <!-- Lagu Autoplay + Loop -->
+    <audio id="lagu" loop autoplay preload="auto">
         <source src="tiktokio.com1791629333_rgEMmbt7bzcvwHfKsDYd.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Tombol Musik -->
     <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
 
-    <!-- Partikel -->
-    <div class="falling-container" id="fallingContainer"></div>
+    <!-- Hiasan Sudut -->
+    <div class="corner-decoration top-left">🌸</div>
+    <div class="corner-decoration top-right">⭐</div>
+    <div class="corner-decoration bottom-left">🌷</div>
+    <div class="corner-decoration bottom-right">✨</div>
 
-    <!-- Hint -->
-    <div class="swipe-hint" id="swipeHint">GESER KE ATAS ✧ BAWAH</div>
+    <!-- Animasi Jatuh -->
+    <div class="falling-container" id="fallingContainer"></div>
 
     <!-- ==================== SLIDE 1 ==================== -->
     <div class="slide active" id="slide1">
         <div class="card">
+            <div class="card-decoration-top">🎂 SPECIAL DAY 🎂</div>
             <span class="ornament">✧ ✧ ✧</span>
             <span class="cake">🎂</span>
             <h1>Happy Birthday</h1>
@@ -427,13 +457,14 @@
             <div class="dari">— dari Sasa —</div>
         </div>
         <div class="nav-buttons">
-            <button class="btn-nav next" onclick="goToSlide('slide2')">Lanjut</button>
+            <button class="btn-nav next" onclick="goToSlide('slide2')">Lanjut ▶</button>
         </div>
     </div>
 
     <!-- ==================== SLIDE 2 ==================== -->
     <div class="slide" id="slide2">
         <div class="card">
+            <div class="card-decoration-top">📸 MEMORIES 📸</div>
             <span class="ornament">✧ ✧ ✧</span>
             <h1 style="font-size: 2.2rem;">Untuk Kamu</h1>
             <span class="ornament" style="margin-top: 5px;">✧ ✧ ✧</span>
@@ -464,14 +495,15 @@
             <span class="ornament">✧ ✧ ✧</span>
         </div>
         <div class="nav-buttons">
-            <button class="btn-nav prev" onclick="goToSlide('slide1')">Kembali</button>
-            <button class="btn-nav next" onclick="goToSlide('slide3')">Lanjut</button>
+            <button class="btn-nav prev" onclick="goToSlide('slide1')">◀ Kembali</button>
+            <button class="btn-nav next" onclick="goToSlide('slide3')">Lanjut ▶</button>
         </div>
     </div>
 
     <!-- ==================== SLIDE 3 ==================== -->
     <div class="slide" id="slide3">
         <div class="card">
+            <div class="card-decoration-top">✨ HARAPAN ✨</div>
             <span class="ornament">✧ ✧ ✧</span>
             <span class="hati">🤍</span>
             <h1 style="font-size: 2.2rem;">Harapanku</h1>
@@ -492,14 +524,15 @@
             <span class="ornament">✧ ✧ ✧</span>
         </div>
         <div class="nav-buttons">
-            <button class="btn-nav prev" onclick="goToSlide('slide2')">Kembali</button>
-            <button class="btn-nav next" onclick="goToSlide('slide4')">Lanjut</button>
+            <button class="btn-nav prev" onclick="goToSlide('slide2')">◀ Kembali</button>
+            <button class="btn-nav next" onclick="goToSlide('slide4')">Lanjut ▶</button>
         </div>
     </div>
 
     <!-- ==================== SLIDE 4 ==================== -->
     <div class="slide" id="slide4">
         <div class="card">
+            <div class="card-decoration-top">💖 UNTUKMU 💖</div>
             <span class="ornament">✧ ✧ ✧</span>
             <span class="hati">🩷</span>
             <h1 style="font-size: 2.2rem;">Untukmu</h1>
@@ -521,7 +554,7 @@
             <div class="ttd">— Sasa —</div>
         </div>
         <div class="nav-buttons">
-            <button class="btn-nav prev" onclick="goToSlide('slide3')">Kembali</button>
+            <button class="btn-nav prev" onclick="goToSlide('slide3')">◀ Kembali</button>
             <button class="btn-nav" onclick="goToSlide('slide1')">↻ Ulang</button>
         </div>
     </div>
@@ -535,44 +568,54 @@
     </div>
 
     <script>
-        // ===== PARTIKEL LEMBUT =====
+        // ===== ANIMASI JATUH =====
         const container = document.getElementById('fallingContainer');
-        const items = ['🌸', '✧', '🩷', '🌷', '✨', '🤍', '💮', '🌺'];
+        const items = ['🌸', '⭐', '🩷', '🌷', '✨', '🤍', '💮', '🌺', '💫', '🌟'];
 
-        for (let i = 0; i < 35; i++) {
+        for (let i = 0; i < 30; i++) {
             const el = document.createElement('div');
             el.className = 'falling-item';
             el.textContent = items[Math.floor(Math.random() * items.length)];
             el.style.left = Math.random() * 100 + '%';
-            el.style.fontSize = (Math.random() * 18 + 12) + 'px';
-            el.style.animationDuration = (Math.random() * 16 + 10) + 's';
+            el.style.fontSize = (Math.random() * 16 + 12) + 'px';
+            el.style.animationDuration = (Math.random() * 18 + 12) + 's';
             el.style.animationDelay = (Math.random() * 20) + 's';
-            el.style.opacity = (Math.random() * 0.3 + 0.2);
+            el.style.opacity = (Math.random() * 0.4 + 0.2);
             container.appendChild(el);
         }
 
-        // ===== LAGU =====
+        // ===== LAGU AUTOPLAY + LOOP =====
         const lagu = document.getElementById('lagu');
         const musicBtn = document.getElementById('musicBtn');
 
-        function cobaPutarLagu() {
-            lagu.play().then(() => {
-                musicBtn.classList.add('playing');
-                musicBtn.textContent = '🎵';
-            }).catch(err => {
-                musicBtn.textContent = '🔇';
-                const mulaiLagu = () => {
-                    lagu.play().then(() => {
-                        musicBtn.classList.add('playing');
-                        musicBtn.textContent = '🎵';
-                    }).catch(e => {});
-                    document.removeEventListener('click', mulaiLagu);
-                    document.removeEventListener('touchstart', mulaiLagu);
-                };
-                document.addEventListener('click', mulaiLagu);
-                document.addEventListener('touchstart', mulaiLagu);
-            });
+        function cobaAutoplay() {
+            const playPromise = lagu.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicBtn.classList.add('playing');
+                    musicBtn.textContent = '🎵';
+                }).catch(err => {
+                    musicBtn.textContent = '🔇';
+                    const mulaiLagu = () => {
+                        lagu.play().then(() => {
+                            musicBtn.classList.add('playing');
+                            musicBtn.textContent = '🎵';
+                        }).catch(e => {});
+                        document.removeEventListener('click', mulaiLagu);
+                        document.removeEventListener('touchstart', mulaiLagu);
+                        document.removeEventListener('scroll', mulaiLagu);
+                    };
+                    document.addEventListener('click', mulaiLagu);
+                    document.addEventListener('touchstart', mulaiLagu);
+                    document.addEventListener('scroll', mulaiLagu);
+                });
+            }
         }
+
+        lagu.addEventListener('ended', () => {
+            lagu.currentTime = 0;
+            lagu.play();
+        });
 
         function toggleMusic() {
             if (lagu.paused) {
@@ -586,7 +629,7 @@
             }
         }
 
-        cobaPutarLagu();
+        cobaAutoplay();
 
         // ===== NAVIGASI =====
         const slides = ['slide1', 'slide2', 'slide3', 'slide4'];
@@ -604,56 +647,6 @@
                 dot.classList.toggle('active', i === currentIndex);
             });
         }
-
-        function nextSlide() {
-            if (currentIndex < slides.length - 1) goToSlide(slides[currentIndex + 1]);
-        }
-
-        function prevSlide() {
-            if (currentIndex > 0) goToSlide(slides[currentIndex - 1]);
-        }
-
-        // ===== SWIPE =====
-        let touchStartY = 0, touchStartX = 0, touchStartTime = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartY = e.touches[0].clientY;
-            touchStartX = e.touches[0].clientX;
-            touchStartTime = Date.now();
-        }, { passive: true });
-
-        document.addEventListener('touchend', (e) => {
-            const diffY = touchStartY - e.changedTouches[0].clientY;
-            const diffX = touchStartX - e.changedTouches[0].clientX;
-            const duration = Date.now() - touchStartTime;
-            if (duration < 800) {
-                if (diffY > 50 && Math.abs(diffX) < 100) nextSlide();
-                else if (diffY < -50 && Math.abs(diffX) < 100) prevSlide();
-            }
-        }, { passive: true });
-
-        // ===== MOUSE =====
-        let mouseStartY = 0, isMouseDown = false;
-        document.addEventListener('mousedown', (e) => { mouseStartY = e.clientY; isMouseDown = true; });
-        document.addEventListener('mouseup', (e) => {
-            if (!isMouseDown) return;
-            isMouseDown = false;
-            const diff = mouseStartY - e.clientY;
-            if (diff > 50) nextSlide();
-            else if (diff < -50) prevSlide();
-        });
-
-        // ===== KEYBOARD =====
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp' || e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') prevSlide();
-        });
-
-        // ===== HINT =====
-        setTimeout(() => {
-            const hint = document.getElementById('swipeHint');
-            if (hint) hint.style.display = 'none';
-        }, 5000);
     </script>
 
 </body>
